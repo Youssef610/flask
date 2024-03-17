@@ -117,6 +117,20 @@ def get_register(code, ID):
             response2 = requests.get(url2, headers=headers2)
             html2 = response2.text
             soup = BeautifulSoup(html2, 'html.parser')
+            desired_values = [
+                "ctl00$cntphmaster$txtEdPhaseNodeIdHidden",
+                "ctl00$cntphmaster$txtAsNodeHidden",
+                "ctl00$cntphmaster$Txtstudid",
+                "ctl00$cntphmaster$txtAsNodeIDHidden"
+            ]
+
+            extracted_values = {}
+
+            for value_id in desired_values:
+                element = soup.find("input", {"name": value_id})
+                if element:
+                    extracted_values[value_id] = element.get('value')
+            # print(extracted_values)
             viewstate_input = soup.find('input', {'name': '__VIEWSTATE'})
             viewstate_value2 = viewstate_input['value']
             event_validation_input = soup.find(
@@ -134,9 +148,9 @@ def get_register(code, ID):
                         '__VIEWSTATEENCRYPTED': '',
                         '__EVENTVALIDATION': f'{event_validation_value2}',
                         'ctl00$cntphmaster$txtEdAcadYearYearIdHidden': '54',
-                        'ctl00$cntphmaster$txtEdPhaseNodeIdHidden': '2208',
-                        'ctl00$cntphmaster$txtAsNodeHidden': '3423',
-                        'ctl00$cntphmaster$Txtstudid': '489702',
+                        'ctl00$cntphmaster$txtEdPhaseNodeIdHidden': extracted_values['ctl00$cntphmaster$txtEdPhaseNodeIdHidden'],
+                        'ctl00$cntphmaster$txtAsNodeHidden': extracted_values['ctl00$cntphmaster$txtAsNodeHidden'] ,
+                        'ctl00$cntphmaster$Txtstudid': extracted_values['ctl00$cntphmaster$Txtstudid'] ,
                         'ctl00$cntphmaster$GridDataCount_DropDownList': '300',
                         'ctl00$cntphmaster$txtEdStudScholasticHidden': '',
                         'rbHiddenHasGroup': '',
@@ -149,7 +163,7 @@ def get_register(code, ID):
                         'rbHiddenHasGroup': '',
                         'rbHiddenHasGroup': '',
                         'rbHiddenHasGroup': '',
-                        'ctl00$cntphmaster$txtAsNodeIDHidden': '3423',
+                        'ctl00$cntphmaster$txtAsNodeIDHidden':  extracted_values['ctl00$cntphmaster$txtAsNodeIDHidden'],
                         'ctl00$cntphmaster$txtEDSUBJECTID': '',
                         'ctl00$cntphmaster$txtFacultyTransfereFrom': '',
                         'ctl00$cntphmaster$txtCurrentFacultyTransfereTo': '',
@@ -246,10 +260,6 @@ def get_register(code, ID):
                     'AllSubject': grdEdSubject
                 }
                 data['AllSubject'] = [list(item[0]) + item[1:] for item in data['AllSubject']]
-                # json_data = json.dumps(data, ensure_ascii=False)
-                # data_json = json.loads(data)
-                # print(json.dumps(data_json, indent=4, ensure_ascii=False))
-                # # print(data)
                 return jsonify(data)
             
 
@@ -259,3 +269,4 @@ def get_register(code, ID):
                 
         except Exception as e:
             continue
+        
