@@ -2,10 +2,20 @@ from flask import Flask, request, jsonify
 from login import loginPage
 from natiga import get_natiga
 from register import get_register
+import asyncio
 
 app = Flask(__name__)
 
+async def async_login(id, code):
+    return await asyncio.to_thread(loginPage, id, code)
 
+
+async def async_natiga(ID, code):
+    return await asyncio.to_thread(get_natiga, ID, code)
+
+
+async def async_register(ID, code):
+    return await asyncio.to_thread(get_register, ID, code)
 @app.route('/login', methods=['POST'])
 def login():
     try:
