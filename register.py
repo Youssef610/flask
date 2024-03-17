@@ -1,8 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
-
-
+from flask import jsonify
 def get_register(code, ID):
     while True:
         try:
@@ -212,7 +211,7 @@ def get_register(code, ID):
                             "section": section,
                         })
                 else:
-                    return "Target div not found."
+                    print("target div not found")
                 # All Data
                 table = soup.find(
                     'table', {'id': 'ctl00_cntphmaster_grdEdSubject'})
@@ -236,18 +235,22 @@ def get_register(code, ID):
                             grdEdSubject.append(cols_data)
                         
                 else:
-                    return"Table not found!"
+                    print("table not found")
                 
 
-
+                if StudSubject==[]:
+                    continue
                 data = {
                     'StudSubject':StudSubject,
 
                     'AllSubject': grdEdSubject
                 }
                 data['AllSubject'] = [list(item[0]) + item[1:] for item in data['AllSubject']]
-                json_data = json.dumps(data, ensure_ascii=False)
-                return json_data
+                # json_data = json.dumps(data, ensure_ascii=False)
+                # data_json = json.loads(data)
+                # print(json.dumps(data_json, indent=4, ensure_ascii=False))
+                # # print(data)
+                return jsonify(data)
             
 
                 
