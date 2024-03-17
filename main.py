@@ -53,6 +53,3 @@ def home():
     return jsonify({"msg": "Server For Our SCI APP..."})
 
 
-
-if __name__ == '__main__':
-    app.run(debug=True)
