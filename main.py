@@ -3,6 +3,7 @@ from login import loginPage
 from natiga import get_natiga
 from register import get_register
 from regist_sup import regist_sup
+from deleteSup import delete_sup
 import asyncio
 
 app = Flask(__name__)
@@ -20,6 +21,9 @@ async def async_register(ID, code):
 
 async def async_regist_sup(ID, code,indexOFSub):
     return await asyncio.to_thread(regist_sup, ID, code,indexOFSub)
+
+async def async_delete_sup(ID, code,indexOFSub):
+    return await asyncio.to_thread(delete_sup, ID, code,indexOFSub)
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -75,11 +79,24 @@ def regisSup():
         return jsonify({"error": error_message}), 500
     return extracted_data
 
+@app.route('/deleteSup', methods=['POST'])
+def deleteSup():
+    try:
+        print('WE IN DeleteSup')
+        data = request.get_json()
+        ID = data['id']
+        code = data['code']
+        indexOFSub = data['indexOFSub']
+        extracted_data = delete_sup(code=code, ID=ID,indexOFSub=indexOFSub)
+    except Exception as e:
+        error_message = "Internal Server Error: {}".format(str(e))
+        return jsonify({"error": error_message}), 500
+    return extracted_data
+
 
 @app.route('/')
 def home():
     return jsonify({"msg": "Server For Our SCI APP..."})
-
 
 
 
