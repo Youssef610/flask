@@ -4,6 +4,7 @@ from natiga import get_natiga
 from register import get_register
 from regist_sup import regist_sup
 from deleteSup import delete_sup
+from studentBooks  import getStudentBooks
 import asyncio
 
 app = Flask(__name__)
@@ -51,6 +52,19 @@ def natiga():
         return jsonify({"error": error_message}), 500
 
     return extracted_data
+
+@app.route('/books', methods=['POST'])
+def studentBooks():
+    try:
+        data = request.get_json()
+        id = data['id']
+        code = data['code']
+        books_data = getStudentBooks(id, code)
+    except Exception as e:
+        error_message = "Internal Server Error: {}".format(str(e))
+        return jsonify({"error": error_message}), 500
+
+    return jsonify({"books": books_data})
 
 
 @app.route('/register', methods=['POST'])
