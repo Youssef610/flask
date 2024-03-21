@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import json
 from flask import jsonify
 import re
 
@@ -138,6 +137,7 @@ def regist_sup(code, ID,indexOFSub):
             event_validation_input = soup.find(
                 'input', {'name': '__EVENTVALIDATION'})
             event_validation_value2 = event_validation_input['value']
+
             url3 = "https://studentactivities.zu.edu.eg/Students/Registration/ED/OR_RecordStudentPrimarySubjectsCredit.aspx"
             payload3 = {'ctl00$ScriptManager1': 'ctl00$cntphmaster$panal1|ctl00$cntphmaster$GridDataCount_DropDownList',
                         '__EVENTTARGET': 'ctl00$cntphmaster$GridDataCount_DropDownList',
@@ -215,6 +215,8 @@ def regist_sup(code, ID,indexOFSub):
                 matches = re.findall(pattern, selectSupTable)
                 for match in matches:
                     viewstate_value5=match
+
+                    
                 url = "https://studentactivities.zu.edu.eg/Students/Registration/ED/OR_RecordStudentPrimarySubjectsCredit.aspx"
 
                 payload = {   'ctl00$ScriptManager1':'ctl00$cntphmaster$panal1|ctl00$cntphmaster$btnHidden1',
@@ -410,6 +412,25 @@ def regist_sup(code, ID,indexOFSub):
         try:
             y = requests.post(url2,headers=head2,data=data2)
             soup = BeautifulSoup(y.text, 'html.parser')
+            target_div = soup.find(
+                'table', id='ctl00_cntphmaster_grdEdStudSubjectPhase')
+            StudSubject = []
+            if target_div:
+                tr_elements = target_div.find_all('tr')
+                for tr in tr_elements[1:]:
+                    td_elements = tr.find_all('td')
+                    index = td_elements[3].text.strip()
+                    name = td_elements[2].text.strip()
+                    group = td_elements[4].text.strip()
+                    section = td_elements[5].text.strip()
+                    StudSubject.append({
+                        "index": index,
+                        "name": name,
+                        "group": group,
+                        "section": section,
+                    })
+            else:
+                print("target div not found")
 
             # Find the span element by its id
             span_element = soup.find('span', id='ctl00_cntphmaster_ConfirmUserControl_lblmessage')
@@ -418,7 +439,7 @@ def regist_sup(code, ID,indexOFSub):
             text_content = span_element.get_text()
             if "Input string was not in a correct format." not in text_content and "Object" not in text_content:
                 data = text_content.replace("\n", "")
-                return jsonify({"msg":data})
+                return jsonify({"msg":data,"StudSubject":StudSubject})
             else:
                 continue
 
@@ -427,4 +448,3 @@ def regist_sup(code, ID,indexOFSub):
             continue
         
             
-
