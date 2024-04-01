@@ -252,8 +252,8 @@ def get_register(code, ID):
                     print("table not found")
                 
 
-                if StudSubject==[]:
-                    continue
+                # if StudSubject==[]:
+                #     continue
                 data = {
                     'StudSubject':StudSubject,
 
