@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import re
 
 LOGIN_PAGE_URL = 'http://scistudent.eps.zu.edu.eg/(X(1)S(ocgyf1qhaxaijvus5aa0fsg4))/Views/StudentViews/StudentLogin'
 
@@ -95,10 +96,16 @@ def loginPage(id, code):
             'input', {'id': 'ContentPlaceHolder1_txtCode'})
         if txt_code:
             input_values['txtCode'] = txt_code.get('value')
-    return {
-        "fullName": input_values['txtFullName'],
-        "code": input_values['txtCode'],
-        "level": input_values['txtPhase'],
-        "subjectsName": subject_names,
-        "BooksPaid": ispaid
-    }
+        return {
+            "fullName": input_values['txtFullName'],
+            "code": input_values['txtCode'],
+            "level": input_values['txtPhase'],
+            "subjectsName": subject_names,
+            "BooksPaid": ispaid
+        }
+    else:
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        # Find the element with id "lblMessage" and get its text
+        error_message = soup.find('span', id='lblMessage').text
+        return{"error":error_message}
