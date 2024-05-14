@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import re
 
 LOGIN_PAGE_URL = 'http://scistudent.eps.zu.edu.eg/(X(1)S(ocgyf1qhaxaijvus5aa0fsg4))/Views/StudentViews/StudentLogin'
 
@@ -56,7 +55,7 @@ def loginPage(id, code):
         'Referer': 'http://scistudent.eps.zu.edu.eg/(X(1)S(ocgyf1qhaxaijvus5aa0fsg4))/Views/StudentViews/Landing',
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'en-US,en;q=0.9',
-        'Cookie': f"{ response.headers['Set-Cookie'] }",
+        'Cookie': f"{response.headers['Set-Cookie']}",
         'Connection': 'close',
     }
 
@@ -108,4 +107,4 @@ def loginPage(id, code):
 
         # Find the element with id "lblMessage" and get its text
         error_message = soup.find('span', id='lblMessage').text
-        return{"error":error_message}
+        return {"error": error_message}

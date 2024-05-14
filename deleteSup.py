@@ -4,7 +4,8 @@ import json
 from flask import jsonify
 import re
 
-def delete_sup(code, ID,indexOFSub):
+
+def delete_sup(code, ID, indexOFSub):
     while True:
         try:
             res = requests.post(
@@ -152,8 +153,8 @@ def delete_sup(code, ID,indexOFSub):
                         '__EVENTVALIDATION': f'{event_validation_value2}',
                         'ctl00$cntphmaster$txtEdAcadYearYearIdHidden': '54',
                         'ctl00$cntphmaster$txtEdPhaseNodeIdHidden': extracted_values['ctl00$cntphmaster$txtEdPhaseNodeIdHidden'],
-                        'ctl00$cntphmaster$txtAsNodeHidden': extracted_values['ctl00$cntphmaster$txtAsNodeHidden'] ,
-                        'ctl00$cntphmaster$Txtstudid': extracted_values['ctl00$cntphmaster$Txtstudid'] ,
+                        'ctl00$cntphmaster$txtAsNodeHidden': extracted_values['ctl00$cntphmaster$txtAsNodeHidden'],
+                        'ctl00$cntphmaster$Txtstudid': extracted_values['ctl00$cntphmaster$Txtstudid'],
                         'ctl00$cntphmaster$GridDataCount_DropDownList': '300',
                         'ctl00$cntphmaster$txtEdStudScholasticHidden': '',
                         'rbHiddenHasGroup': '',
@@ -210,79 +211,78 @@ def delete_sup(code, ID,indexOFSub):
                 pattern = r"__EVENTVALIDATION\|([^\|]+)"
                 matches = re.findall(pattern, selectSupTable)
                 for match in matches:
-                    event_validation_value5=match
+                    event_validation_value5 = match
 
                 pattern = r"__VIEWSTATE\|([^\|]+)"
                 matches = re.findall(pattern, selectSupTable)
                 for match in matches:
-                    viewstate_value5=match
+                    viewstate_value5 = match
 
-                    
                 url = "https://studentactivities.zu.edu.eg/Students/Registration/ED/OR_RecordStudentPrimarySubjectsCredit.aspx"
 
                 payload = {
-                    'ctl00$ScriptManager1':'ctl00$cntphmaster$panal1|ctl00$cntphmaster$grdEdStudSubjectPhase$ctl07$btnDelete',
-                    'ctl00$cntphmaster$txtEdAcadYearYearIdHidden':'54',
-                    'ctl00$cntphmaster$txtEdPhaseNodeIdHidden':extracted_values['ctl00$cntphmaster$txtEdPhaseNodeIdHidden'],
-                    'ctl00$cntphmaster$txtAsNodeHidden':extracted_values['ctl00$cntphmaster$txtAsNodeHidden'],
-                    'ctl00$cntphmaster$Txtstudid':extracted_values['ctl00$cntphmaster$Txtstudid'],
-                    'ctl00$cntphmaster$GridDataCount_DropDownList':'300',
-                    'ctl00$cntphmaster$txtEdStudScholasticHidden':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'rbHiddenHasGroup':'',
-                    'ctl00$cntphmaster$txtAsNodeIDHidden':extracted_values['ctl00$cntphmaster$txtAsNodeIDHidden'],
-                    'ctl00$cntphmaster$txtEDSUBJECTID':'',
-                    'ctl00$cntphmaster$txtFacultyTransfereFrom':'',
-                    'ctl00$cntphmaster$txtCurrentFacultyTransfereTo':'',
-                    'ctl00$cntphmaster$txtEdPhaseNodeID':'',
-                    'ctl00$cntphmaster$txtAsNodeID':'',
-                    'ctl00$cntphmaster$txtedStudDiversionToAppId':'',
-                    'ctl00$cntphmaster$txtEdAcadYearID':'',
-                    'ctl00$cntphmaster$txtEdSubjectIDs':'',
-                    'ctl00$cntphmaster$grdEdStudSubjectPhase$ctl02$ctl00':'on',
-                    'ctl00$cntphmaster$grdEdStudSubjectPhase$ctl03$ctl00':'on',
-                    'ctl00$cntphmaster$grdEdStudSubjectPhase$ctl04$ctl00':'on',
-                    'ctl00$cntphmaster$grdEdStudSubjectPhase$ctl05$ctl00':'on',
-                    'ctl00$cntphmaster$grdEdStudSubjectPhase$ctl07$ctl00':'on',
-                    'ctl00$cntphmaster$HidEdStudScholasticId':extracted_values['ctl00$cntphmaster$HidEdStudScholasticId'],
-                    '__EVENTTARGET':'',
-                    '__EVENTARGUMENT':'',
-                    '__LASTFOCUS':'',
-                    '__VIEWSTATE':f'{viewstate_value5}',
-                    '__VIEWSTATEGENERATOR':'798032E8',
-                    '__SCROLLPOSITIONX':'0',
-                    '__SCROLLPOSITIONY':'0',
-                    '__EVENTVALIDATION':f'{event_validation_value5}',
-                    '__VIEWSTATEENCRYPTED':'',
-                    '__ASYNCPOST':'true',
-                    f'ctl00$cntphmaster$grdEdStudSubjectPhase$ctl0{indexOFSub}$btnDelete.x':'10',
-                    f'ctl00$cntphmaster$grdEdStudSubjectPhase$ctl0{indexOFSub}$btnDelete.y':'14',
+                    'ctl00$ScriptManager1': 'ctl00$cntphmaster$panal1|ctl00$cntphmaster$grdEdStudSubjectPhase$ctl07$btnDelete',
+                    'ctl00$cntphmaster$txtEdAcadYearYearIdHidden': '54',
+                    'ctl00$cntphmaster$txtEdPhaseNodeIdHidden': extracted_values['ctl00$cntphmaster$txtEdPhaseNodeIdHidden'],
+                    'ctl00$cntphmaster$txtAsNodeHidden': extracted_values['ctl00$cntphmaster$txtAsNodeHidden'],
+                    'ctl00$cntphmaster$Txtstudid': extracted_values['ctl00$cntphmaster$Txtstudid'],
+                    'ctl00$cntphmaster$GridDataCount_DropDownList': '300',
+                    'ctl00$cntphmaster$txtEdStudScholasticHidden': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'rbHiddenHasGroup': '',
+                    'ctl00$cntphmaster$txtAsNodeIDHidden': extracted_values['ctl00$cntphmaster$txtAsNodeIDHidden'],
+                    'ctl00$cntphmaster$txtEDSUBJECTID': '',
+                    'ctl00$cntphmaster$txtFacultyTransfereFrom': '',
+                    'ctl00$cntphmaster$txtCurrentFacultyTransfereTo': '',
+                    'ctl00$cntphmaster$txtEdPhaseNodeID': '',
+                    'ctl00$cntphmaster$txtAsNodeID': '',
+                    'ctl00$cntphmaster$txtedStudDiversionToAppId': '',
+                    'ctl00$cntphmaster$txtEdAcadYearID': '',
+                    'ctl00$cntphmaster$txtEdSubjectIDs': '',
+                    'ctl00$cntphmaster$grdEdStudSubjectPhase$ctl02$ctl00': 'on',
+                    'ctl00$cntphmaster$grdEdStudSubjectPhase$ctl03$ctl00': 'on',
+                    'ctl00$cntphmaster$grdEdStudSubjectPhase$ctl04$ctl00': 'on',
+                    'ctl00$cntphmaster$grdEdStudSubjectPhase$ctl05$ctl00': 'on',
+                    'ctl00$cntphmaster$grdEdStudSubjectPhase$ctl07$ctl00': 'on',
+                    'ctl00$cntphmaster$HidEdStudScholasticId': extracted_values['ctl00$cntphmaster$HidEdStudScholasticId'],
+                    '__EVENTTARGET': '',
+                    '__EVENTARGUMENT': '',
+                    '__LASTFOCUS': '',
+                    '__VIEWSTATE': f'{viewstate_value5}',
+                    '__VIEWSTATEGENERATOR': '798032E8',
+                    '__SCROLLPOSITIONX': '0',
+                    '__SCROLLPOSITIONY': '0',
+                    '__EVENTVALIDATION': f'{event_validation_value5}',
+                    '__VIEWSTATEENCRYPTED': '',
+                    '__ASYNCPOST': 'true',
+                    f'ctl00$cntphmaster$grdEdStudSubjectPhase$ctl0{indexOFSub}$btnDelete.x': '10',
+                    f'ctl00$cntphmaster$grdEdStudSubjectPhase$ctl0{indexOFSub}$btnDelete.y': '14',
                 }
                 headers = {
                     "Accept": "*/*",
@@ -303,28 +303,20 @@ def delete_sup(code, ID,indexOFSub):
                     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
                     "X-Microsoftajax": "Delta=true"
                 }
-                x = requests.post(url,headers=headers,data=payload)
+                x = requests.post(url, headers=headers, data=payload)
                 soup = BeautifulSoup(x.text, 'html.parser')
 
                 # Extract the text value from the span element
-                span_element = soup.find('span', id='ctl00_cntphmaster_ConfirmUserControl_lblmessage')
+                span_element = soup.find(
+                    'span', id='ctl00_cntphmaster_ConfirmUserControl_lblmessage')
                 if span_element:
                     extracted_value = span_element.text
-                    return jsonify({"msg":"تم حذف المقرر"})
+                    return jsonify({"msg": "تم حذف المقرر"})
                 else:
                     print("Span element not found.")
 
-                
-
-                
             else:
                 continue
-                
+
         except Exception as e:
             continue
-    
-    
-    
-
-  
-            

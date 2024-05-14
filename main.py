@@ -4,14 +4,16 @@ from natiga import get_natiga
 from register import get_register
 from regist_sup import regist_sup
 from deleteSup import delete_sup
-from studentBooks  import getStudentBooks
+from studentBooks import getStudentBooks
 from login_send import loginData
 import asyncio
 
 app = Flask(__name__)
 
+
 async def async_login(id, code):
     return await asyncio.to_thread(loginPage, id, code)
+
 
 async def async_login_send(id, code):
     return await asyncio.to_thread(loginData, id, code)
@@ -24,11 +26,14 @@ async def async_natiga(ID, code):
 async def async_register(ID, code):
     return await asyncio.to_thread(get_register, ID, code)
 
-async def async_regist_sup(ID, code,indexOFSub):
-    return await asyncio.to_thread(regist_sup, ID, code,indexOFSub)
 
-async def async_delete_sup(ID, code,indexOFSub):
-    return await asyncio.to_thread(delete_sup, ID, code,indexOFSub)
+async def async_regist_sup(ID, code, indexOFSub):
+    return await asyncio.to_thread(regist_sup, ID, code, indexOFSub)
+
+
+async def async_delete_sup(ID, code, indexOFSub):
+    return await asyncio.to_thread(delete_sup, ID, code, indexOFSub)
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -42,6 +47,7 @@ def login():
         return jsonify({"error": error_message}), 500
 
     return jsonify(extracted_data)
+
 
 @app.route('/loginData', methods=['POST'])
 def loginSend():
@@ -70,6 +76,7 @@ def natiga():
 
     return extracted_data
 
+
 @app.route('/books', methods=['POST'])
 def studentBooks():
     try:
@@ -96,6 +103,8 @@ def register():
         error_message = "Internal Server Error: {}".format(str(e))
         return jsonify({"error": error_message}), 500
     return extracted_data
+
+
 @app.route('/registSup', methods=['POST'])
 def regisSup():
     try:
@@ -104,11 +113,12 @@ def regisSup():
         ID = data['id']
         code = data['code']
         indexOFSub = data['indexOFSub']
-        extracted_data = regist_sup(code=code, ID=ID,indexOFSub=indexOFSub)
+        extracted_data = regist_sup(code=code, ID=ID, indexOFSub=indexOFSub)
     except Exception as e:
         error_message = "Internal Server Error: {}".format(str(e))
         return jsonify({"error": error_message}), 500
     return extracted_data
+
 
 @app.route('/deleteSup', methods=['POST'])
 def deleteSup():
@@ -118,7 +128,7 @@ def deleteSup():
         ID = data['id']
         code = data['code']
         indexOFSub = data['indexOFSub']
-        extracted_data = delete_sup(code=code, ID=ID,indexOFSub=indexOFSub)
+        extracted_data = delete_sup(code=code, ID=ID, indexOFSub=indexOFSub)
     except Exception as e:
         error_message = "Internal Server Error: {}".format(str(e))
         return jsonify({"error": error_message}), 500
@@ -130,6 +140,5 @@ def home():
     return jsonify({"msg": "Server For Our SCI APP..."})
 
 
-
-if __name__ == '__main__':  
-   app.run()
+if __name__ == '__main__':
+    app.run()
