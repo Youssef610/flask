@@ -5,12 +5,16 @@ from register import get_register
 from regist_sup import regist_sup
 from deleteSup import delete_sup
 from studentBooks  import getStudentBooks
+from login_send import loginData
 import asyncio
 
 app = Flask(__name__)
 
 async def async_login(id, code):
     return await asyncio.to_thread(loginPage, id, code)
+
+async def async_login_send(id, code):
+    return await asyncio.to_thread(loginData, id, code)
 
 
 async def async_natiga(ID, code):
@@ -33,6 +37,19 @@ def login():
         id = data['id']
         code = data['code']
         extracted_data = loginPage(id, code)
+    except Exception as e:
+        error_message = "Internal Server Error: {}".format(str(e))
+        return jsonify({"error": error_message}), 500
+
+    return jsonify(extracted_data)
+
+@app.route('/loginData', methods=['POST'])
+def loginSend():
+    try:
+        data = request.get_json()
+        id = data['id']
+        code = data['code']
+        extracted_data = loginData(id, code)
     except Exception as e:
         error_message = "Internal Server Error: {}".format(str(e))
         return jsonify({"error": error_message}), 500
@@ -114,3 +131,5 @@ def home():
 
 
 
+if __name__ == '__main__':  
+   app.run()
