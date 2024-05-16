@@ -60,6 +60,13 @@ def get_register(code, ID):
             }
 
             response = requests.post(url, headers=headers, data=data)
+            if "pageRedirect" not in response.text:
+                soup = BeautifulSoup(response.text, 'html.parser')
+                # Find the span by id
+                span = soup.find('span', id='ctl00_cntphmaster_ConfirmUserControl_lblmessage')
+                # Extact the text content
+                message = span.text
+                return {"error":message}
 
             url1 = "https://studentactivities.zu.edu.eg/Students/Registration/ED/OR_MAIN_PAGE.aspx"
             headers1 = {
