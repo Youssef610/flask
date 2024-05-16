@@ -1,6 +1,5 @@
 import requests
 import re
-import time
 from bs4 import BeautifulSoup
 
 
@@ -56,7 +55,7 @@ def getStudentBooks(id, code):
         'Referer': 'http://scistudent.eps.zu.edu.eg/(X(1)S(ocgyf1qhaxaijvus5aa0fsg4))/Views/StudentViews/Landing',
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'en-US,en;q=0.9',
-        'Cookie': f"{ response.headers['Set-Cookie'] }",
+        'Cookie': f"{response.headers['Set-Cookie']}",
         'Connection': 'close',
     }
     response2 = requests.get(
@@ -96,7 +95,7 @@ def getStudentBooks(id, code):
         "Connection": "keep-alive",
         "Content-Length": "5777",
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        "Cookie": f"{ response.headers['Set-Cookie'] }",
+        "Cookie": f"{response.headers['Set-Cookie']}",
         "Host": "scistudent.eps.zu.edu.eg",
         "Origin": "http://scistudent.eps.zu.edu.eg",
         "Referer": "http://scistudent.eps.zu.edu.eg/(X(1)S(ocgyf1qhaxaijvus5aa0fsg4))/Views/StudentViews/ESubjectsExams",
