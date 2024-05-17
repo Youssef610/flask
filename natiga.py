@@ -5,11 +5,9 @@ import time
 
 
 def get_natiga(ID, code):
-    general_total_number = []
-    general_total_percent = []
-    general_total_deg_char = []
-    general_total_gpa = []
-    general_total_hours = []
+    t_total_percent = []
+    t_total_gpa = []
+    t_total_deg_char = []
     divs_hash_list = []
     divs_code_list = []
     divs_name_list = []
@@ -24,6 +22,7 @@ def get_natiga(ID, code):
     term_percent_list = []
     term_gpa_list = []
     term_hours_list = []
+    term_hours_char = []
 
     while True:
         try:
@@ -89,10 +88,11 @@ def get_natiga(ID, code):
             if "pageRedirect" not in response.text:
                 soup = BeautifulSoup(response.text, 'html.parser')
                 # Find the span by id
-                span = soup.find('span', id='ctl00_cntphmaster_ConfirmUserControl_lblmessage')
+                span = soup.find(
+                    'span', id='ctl00_cntphmaster_ConfirmUserControl_lblmessage')
                 # Extact the text content
                 message = span.text
-                return {"error":message}
+                return {"error": message}
 
             url1 = "https://studentactivities.zu.edu.eg/Students/Registration/ED/OR_MAIN_PAGE.aspx"
             headers1 = {
@@ -219,11 +219,15 @@ def get_natiga(ID, code):
         'div', {'id': 'oReportDiv'})
     if numbers:
         # General
-        # general_total_number = numbers.find_all('td', {"class": 'a107'})
-        # general_total_percent = numbers.find_all('td', {"class": 'a104'})
-        # general_total_deg_char = numbers.find_all('td', {"class": 'a113'})
-        # general_total_gpa = numbers.find_all('td', {"class": 'a116'})
-        # general_total_hours = numbers.find_all('td', {"class": 'a110'})
+        t_total_percent = [
+            td.text for td in numbers.find_all('td', {"class": 'a178'})]
+        t_total_gpa = [td.text for td in numbers.find_all(
+            'td', {"class": 'a175'})]
+        t_total_deg_char = [
+            td.text for td in numbers.find_all('td', {"class": 'a184'})]
+        print("t_total_gpa:", t_total_gpa)
+        print("t_total_percent:", t_total_percent)
+        print("t_total_deg_char:", t_total_deg_char)
 
         # Each Term نتيجة الفصل :
         term_table = numbers.find_all('table', {"class": 'a219'})
@@ -232,12 +236,14 @@ def get_natiga(ID, code):
             term_percent = div.find_all('td', {"class": 'a211'})
             term_gpa = div.find_all('td', {"class": 'a208'})
             term_hours = div.find_all('td', {"class": 'a214'})
+            term_char = div.find_all('td', {"class": 'a217'})
 
             term_total_list.append([div.text.strip() for div in term_total])
             term_percent_list.append([div.text.strip()
                                       for div in term_percent])
             term_gpa_list.append([div.text.strip() for div in term_gpa])
             term_hours_list.append([div.text.strip() for div in term_hours])
+            term_hours_char.append([div.text.strip() for div in term_char])
 
         # Table * Each Term class .a219
         table = numbers.find_all('table', {"class": 'a327'})
@@ -293,5 +299,9 @@ def get_natiga(ID, code):
                     "term_total_list": term_total_list,
                     "term_percent_list": term_percent_list,
                     "term_gpa_list": term_gpa_list,
+                    "term_hours_char": term_hours_char,
                     "term_hours_list": term_hours_list,
+                    "total_percent": t_total_percent,
+                    "total_gpa": t_total_gpa,
+                    "total_deg_char": t_total_deg_char,
                     })
