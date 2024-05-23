@@ -23,29 +23,27 @@ def get_natiga(ID, code):
     term_gpa_list = []
     term_hours_list = []
     term_hours_char = []
+    res = requests.post(
+        'https://studentactivities.zu.edu.eg/Students/Registration/ed_login.aspx'
+    )
+    html = res.text
+    soup = BeautifulSoup(html, 'html.parser')
+    viewstate_input = soup.find('input', {'name': '__VIEWSTATE'})
+    viewstate_value = viewstate_input['value']
+    viewstate_generator_input = soup.find('input',
+                                            {'name': '__VIEWSTATEGENERATOR'})
+    event_validation_input = soup.find(
+        'input', {'name': '__EVENTVALIDATION'})
+    viewstate_generator_value = viewstate_generator_input['value']
+    event_validation_value = event_validation_input['value']
+    cookies = res.cookies
 
+    cookie_strings = []
+
+    for cookie in cookies:
+        cookie_strings.append(f"{cookie.name}={cookie.value}")
     while True:
         try:
-            res = requests.post(
-                'https://studentactivities.zu.edu.eg/Students/Registration/ed_login.aspx'
-            )
-            html = res.text
-            soup = BeautifulSoup(html, 'html.parser')
-            viewstate_input = soup.find('input', {'name': '__VIEWSTATE'})
-            viewstate_value = viewstate_input['value']
-            viewstate_generator_input = soup.find('input',
-                                                  {'name': '__VIEWSTATEGENERATOR'})
-            event_validation_input = soup.find(
-                'input', {'name': '__EVENTVALIDATION'})
-            viewstate_generator_value = viewstate_generator_input['value']
-            event_validation_value = event_validation_input['value']
-            cookies = res.cookies
-
-            cookie_strings = []
-
-            for cookie in cookies:
-                cookie_strings.append(f"{cookie.name}={cookie.value}")
-
             url = "https://studentactivities.zu.edu.eg/Students/Registration/ed_login.aspx"
 
             headers = {
@@ -160,6 +158,7 @@ def get_natiga(ID, code):
             break
         except Exception as e:
             print(e)
+            continue
             # time.sleep(5)
 
     url3 = GetnategaUrl
