@@ -158,8 +158,9 @@ def get_natiga(ID, code):
             break
         except Exception as e:
             print(e)
+            time.sleep(2)
             continue
-            # time.sleep(5)
+            
 
     url3 = GetnategaUrl
 
