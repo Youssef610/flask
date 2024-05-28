@@ -248,29 +248,32 @@ def get_natiga(ID, code):
         # Table * Each Term class .a219
         table = numbers.find_all('table', {"class": 'a327'})
         for div in table:
-            divs_hash = div.find_all('div', {"class": 'a314'})
-            divs_code = div.find_all('div', {"class": 'a310'})
-            divs_name = div.find_all('div', {"class": 'a306'})
-            divs_max = div.find_all('div', {"class": 'a302'})
-            divs_min = div.find_all('div', {"class": 'a298'})
-            divs_hours = div.find_all('div', {"class": 'a294'})
-            divs_points = div.find_all('div', {"class": 'a290'})
-            divs_degree_num = div.find_all('div', {"class": 'a286'})
-            divs_degree_txt = div.find_all('div', {"class": 'a282'})
-            divs_done = div.find_all('div', {"class": 'a278'})
+            if not  div.find_all('div', {"class": 'a286'}):
+                None
+            else:
+                divs_hash = div.find_all('div', {"class": 'a314'})
+                divs_code = div.find_all('div', {"class": 'a310'})
+                divs_name = div.find_all('div', {"class": 'a306'})
+                divs_max = div.find_all('div', {"class": 'a302'})
+                divs_min = div.find_all('div', {"class": 'a298'})
+                divs_hours = div.find_all('div', {"class": 'a294'})
+                divs_points = div.find_all('div', {"class": 'a290'})
+                divs_degree_num = div.find_all('div', {"class": 'a286'})
+                divs_degree_txt = div.find_all('div', {"class": 'a282'})
+                divs_done = div.find_all('div', {"class": 'a278'})
 
-            divs_hash_list.append([div.text.strip() for div in divs_hash])
-            divs_code_list.append([div.text.strip() for div in divs_code])
-            divs_name_list.append([div.text.strip() for div in divs_name])
-            divs_max_list.append([div.text.strip() for div in divs_max])
-            divs_min_list.append([div.text.strip() for div in divs_min])
-            divs_hours_list.append([div.text.strip() for div in divs_hours])
-            divs_points_list.append([div.text.strip() for div in divs_points])
-            divs_degree_num_list.append(
-                [div.text.strip() for div in divs_degree_num])
-            divs_degree_txt_list.append(
-                [div.text.strip() for div in divs_degree_txt])
-            divs_done_list.append([div.text.strip() for div in divs_done])
+                divs_hash_list.append([div.text.strip() for div in divs_hash])
+                divs_code_list.append([div.text.strip() for div in divs_code])
+                divs_name_list.append([div.text.strip() for div in divs_name])
+                divs_max_list.append([div.text.strip() for div in divs_max])
+                divs_min_list.append([div.text.strip() for div in divs_min])
+                divs_hours_list.append([div.text.strip() for div in divs_hours])
+                divs_points_list.append([div.text.strip() for div in divs_points])
+                divs_degree_num_list.append(
+                    [div.text.strip() for div in divs_degree_num])
+                divs_degree_txt_list.append(
+                    [div.text.strip() for div in divs_degree_txt])
+                divs_done_list.append([div.text.strip() for div in divs_done])
 
     def create_variables():
         num_lists = len(divs_hash_list)
