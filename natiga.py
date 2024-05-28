@@ -23,6 +23,8 @@ def get_natiga(ID, code):
     term_gpa_list = []
     term_hours_list = []
     term_hours_char = []
+    HaveNatigaError=False
+    errorIndex=0
     res = requests.post(
         'https://studentactivities.zu.edu.eg/Students/Registration/ed_login.aspx'
     )
@@ -249,6 +251,8 @@ def get_natiga(ID, code):
         table = numbers.find_all('table', {"class": 'a327'})
         for div in table:
             if not  div.find_all('div', {"class": 'a286'}):
+                HaveNatigaError=True
+                errorIndex=table.index(div)
                 None
             else:
                 divs_hash = div.find_all('div', {"class": 'a314'})
@@ -297,6 +301,17 @@ def get_natiga(ID, code):
         return term_array
 
     variables = create_variables()
+
+    if HaveNatigaError:
+        term_total_list.pop(errorIndex)
+        term_percent_list.pop(errorIndex)
+        term_gpa_list.pop(errorIndex)
+        term_hours_char.pop(errorIndex)
+        term_hours_list.pop(errorIndex)
+        t_total_percent.pop(errorIndex)
+        t_total_gpa.pop(errorIndex)
+        t_total_deg_char.pop(errorIndex)
+
 
     return jsonify({"term": variables,
                     "term_total_list": term_total_list,
