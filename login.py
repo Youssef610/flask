@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-LOGIN_PAGE_URL = 'http://artstudent.eps.zu.edu.eg/(X(1)S(vugqfz4ncyhusis54w4kuq3o))/Views/StudentViews/StudentLogin?AspxAutoDetectCookieSupport=1'
+LOGIN_PAGE_URL = 'http://artstudent.eps.zu.edu.eg/(X(1)S(ocgyf1qhaxaijvus5aa0fsg4))/Views/StudentViews/StudentLogin'
 
 
 def loginPage(id, code):
