@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
-LOGIN_PAGE_URL = 'http://artstudent.eps.zu.edu.eg/(X(1)S(ocgyf1qhaxaijvus5aa0fsg4))/Views/StudentViews/StudentLogin'
+LOGIN_PAGE_URL = 'http://scistudent.eps.zu.edu.eg/(X(1)S(ocgyf1qhaxaijvus5aa0fsg4))/Views/StudentViews/StudentLogin'
 
 
 def loginData(id, code):
