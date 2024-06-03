@@ -319,6 +319,7 @@ def get_natiga(ID, code):
         t_total_percent.pop(errorIndex)
         t_total_gpa.pop(errorIndex)
         t_total_deg_char.pop(errorIndex)
+        term_level.pop(errorIndex)
 
     return jsonify({"term": variables,
                     "term_year": term_year,
