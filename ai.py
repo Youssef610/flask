@@ -45,7 +45,7 @@ def ai(msg):
     "messages": [
       {
         "role": "system",
-        "content": "You are Chat Smith, a personal AI. Your words are never longer than 2000 words,if asked for result say look to botoom if english word but if arabic say  انظر للاسفل  ."    },
+        "content": "You are Sci Chat, a personal AI. Your words are never longer than 2000 words."    },
       {
         "role": "user",
         "content":f"{msg}"
