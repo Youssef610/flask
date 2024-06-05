@@ -6,6 +6,7 @@ from regist_sup import regist_sup
 from deleteSup import delete_sup
 from studentBooks import getStudentBooks
 from login_send import loginData
+from ai import ai
 import asyncio
 
 app = Flask(__name__)
@@ -33,6 +34,10 @@ async def async_regist_sup(ID, code, indexOFSub):
 
 async def async_delete_sup(ID, code, indexOFSub):
     return await asyncio.to_thread(delete_sup, ID, code, indexOFSub)
+
+
+async def ai_fun(msg):
+    return await asyncio.to_thread(aiPoint, msg)
 
 
 @app.route('/login', methods=['POST'])
@@ -131,6 +136,18 @@ def deleteSup():
         extracted_data = delete_sup(code=code, ID=ID, indexOFSub=indexOFSub)
     except Exception as e:
         error_message = "Internal Server Error: {}".format(str(e))
+        return jsonify({"error": error_message}), 500
+    return extracted_data
+
+
+@app.route('/ai', methods=['POST'])
+def aiPoint():
+    try:
+        data = request.get_json()
+        msg = data['message']
+        extracted_data = ai(msg=msg)
+    except Exception as e:
+        error_message = "Internal Server Error(AI): {}".format(str(e))
         return jsonify({"error": error_message}), 500
     return extracted_data
 
