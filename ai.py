@@ -31,14 +31,7 @@ def ai(msg):
         'Accept-Charset': "UTF-8"
     }
     response = requests.post(url, data=payload, headers=headers)
-    # Regular expression to find all content values
-    pattern = r'"content":"(.*?)"'
-
-    # Find all content values
-    contents = re.findall(pattern, response.text)
-
-    # Combine and clean the content values
-    combined_content = "".join(contents)
-    final_sentence = " ".join(combined_content.strip().split())
-
-    return jsonify({"aiResponse": final_sentence})
+    json_strings = re.findall(r'data:({.*?})', response.text)
+    res = "".join(json.loads(
+        js)["content"] for js in json_strings if json.loads(js)["status"] == "stream")
+    return jsonify({"aiResponse": res})
